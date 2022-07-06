@@ -101,6 +101,24 @@ class Data(tk.Frame):
         toHome = tk.Button(self, text = "Go to the home page.", command = lambda: controller.show_frame("Home"))
         toHome.pack()
 
+class Day:
+    date = ""
+    category = ""
+    num_exercises = 0
+    exercises = {}
+
+    def __init__(self, _date, _category, _num_exercises):
+        self.date = _date
+        self.category = _category
+        self.num_exercises = _num_exercises
+    
+    # dict<string, list[list]]>
+    # ex. Chin-Ups : [[52.5, 12], [52.5, 9], [59, 12]]
+    def updateExercises(self, exercise_name, weightsList, repsList):
+        
+        combinedSet = [[weightsList, repsList]]
+        self.exercises.update({exercise_name, combinedSet})
+
 # root loop
 if __name__ == "__main__":
     root = gains()
