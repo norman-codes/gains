@@ -103,39 +103,56 @@ class Data(tk.Frame):
 
 # An Exercise class following an object-oriented design pattern: one Exercise object will encapsulate its name and the number of sets (plus relevant information per set) performed.
 class Exercise:
-    # Name of the exercise.
-    name = ""
-    # 2D array (list of lists) representing the number of sets performed (1D) and the weight and number of reps per set (2D). 
-        # Ex. [[130, 12], [130, 8], [110, 12]] represents a weight of 130 lbs and 12 reps for the first set, 130 lbs and 8 reps for the second set, and 110 lbs and 12 reps for the third set.
-    sets = [[]]
+    '''
+    DATA:
+    - Name of the exercise.
+    - 2D array (list of lists) representing the number of sets performed (1D) and the weight and number of reps per set (2D). 
+        Ex. [[130, 12], [130, 8], [110, 12]] represents a weight of 130 lbs and 12 reps for the first set, 130 lbs and 8 reps for the second set, and 110 lbs and 12 reps for the third set.
+    '''
 
     # Parametrized constructor taking in a name, an array of weights used and an array of reps performed (*IN ORDER OF SETS PERFORMED!*).
     def __init__(self, _name, numSets, weightList, repList):
+        self.sets = []
         self.name = _name
-        self.sets = [[(i, j) for j in range(2)] for i in range(numSets)]
+        for i in range(numSets):
+            tempSet = []
+            tempSet.append(weightList[i])
+            tempSet.append(repList[i])
+            self.sets.append(tempSet)
 
 # A Day class following an object-oriented desgin pattern: one Day object will encapsulate the workout's date, category (ex. upper push), exercises performed, and the number of exercises performed.
 class Day:
-    date = "" # date format CURRENTLY UNDECIDED
-    category = ""
-    exercises = []
-    num_exercises = 0 # incremented per addition to list of exercises; equivalent to length of exercises array.
+    '''
+    DATA:
+    - date = "" # date format CURRENTLY UNDECIDED
+    - category = ""
+    - exercises = []
+    - num_exercises = 0 # incremented per addition to list of exercises; equivalent to length of exercises array.
+    '''
 
-    def __init__(self, _date, _category, _exercises):
+    def __init__(self, _date, _category, _inputExercises):
         self.date = _date
         self.category = _category
-        for e in _exercises:
-            self.addExercise(e)
+        self.exercises = []
+        self.num_exercises = len(self.exercises)
+        for e in _inputExercises:
+            self.exercises.append(e)
+            self.num_exercises = len(self.exercises)
     
-    def addExercise(self, exercise):
-        self.exercises.append(exercise)
-        self.num_exercises += 1
-        
 # root loop
 if __name__ == "__main__":
     root = gains()
-    test = Exercise("bob")
-    print(test.sets)
+
+    test1 = Exercise("Test1", 1, [10], [1])
+    test2 = Exercise("Test2", 2, [20, 20], [2, 2])
+    test3 = Exercise("Test3", 3, [30, 30, 30], [3, 3, 3])
+    
+    testExercises = [test1, test2, test3]
+
+    testDay = Day("today", "upper push", testExercises)
+
+    print(testDay.date)
+    
     root.mainloop()
 
     
