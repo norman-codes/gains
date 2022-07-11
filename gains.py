@@ -87,8 +87,8 @@ class Log(tk.Frame):
         logTitle = tk.Label(self, text = "Welcome to the Exercise Log.", font = controller.title_font)
         logTitle.pack(side = "top", fill = "x", pady = 10)
 
-        toHome = tk.Button(self, text = "Go to the home page.", command = lambda: controller.show_frame("Home"))
-        toHome.pack()
+        toHomeLog = tk.Button(self, text = "Go to the home page.", command = lambda: controller.show_frame("Home"))
+        toHomeLog.pack()
 
 class Data(tk.Frame):
     def __init__(self, parent, controller):
@@ -98,28 +98,44 @@ class Data(tk.Frame):
         dataTitle = tk.Label(self, text = "Welcome to the Data Analysis page.", font = controller.title_font)
         dataTitle.pack(side = "top", fill = "x", pady = 10)
 
-        toHome = tk.Button(self, text = "Go to the home page.", command = lambda: controller.show_frame("Home"))
-        toHome.pack()
+        toHomeData = tk.Button(self, text = "Go to the home page.", command = lambda: controller.show_frame("Home"))
+        toHomeData.pack()
 
+# An Exercise class following an object-oriented design pattern: one Exercise object will encapsulate its name and the number of sets (plus relevant information per set) performed.
+class Exercise:
+    # Name of the exercise.
+    name = ""
+    # 2D array (list of lists) representing the number of sets performed (1D) and the weight and number of reps per set (2D). 
+        # Ex. [[130, 12], [130, 8], [110, 12]] represents a weight of 130 lbs and 12 reps for the first set, 130 lbs and 8 reps for the second set, and 110 lbs and 12 reps for the third set.
+    sets = [[]]
+
+    # Parametrized constructor taking in a name, an array of weights used and an array of reps performed (*IN ORDER OF SETS PERFORMED!*).
+    def __init__(self, _name, numSets, weightList, repList):
+        self.name = _name
+        self.sets = [[(i, j) for j in range(2)] for i in range(numSets)]
+
+# A Day class following an object-oriented desgin pattern: one Day object will encapsulate the workout's date, category (ex. upper push), exercises performed, and the number of exercises performed.
 class Day:
-    date = ""
+    date = "" # date format CURRENTLY UNDECIDED
     category = ""
-    num_exercises = 0
-    exercises = {}
+    exercises = []
+    num_exercises = 0 # incremented per addition to list of exercises; equivalent to length of exercises array.
 
-    def __init__(self, _date, _category, _num_exercises):
+    def __init__(self, _date, _category, _exercises):
         self.date = _date
         self.category = _category
-        self.num_exercises = _num_exercises
+        for e in _exercises:
+            self.addExercise(e)
     
-    # dict<string, list[list]]>
-    # ex. Chin-Ups : [[52.5, 12], [52.5, 9], [59, 12]]
-    def updateExercises(self, exercise_name, weightsList, repsList):
+    def addExercise(self, exercise):
+        self.exercises.append(exercise)
+        self.num_exercises += 1
         
-        combinedSet = [[weightsList, repsList]]
-        self.exercises.update({exercise_name, combinedSet})
-
 # root loop
 if __name__ == "__main__":
     root = gains()
+    test = Exercise("bob")
+    print(test.sets)
     root.mainloop()
+
+    
