@@ -142,17 +142,4 @@ class Day:
 # root loop
 if __name__ == "__main__":
     root = gains()
-
-    test1 = Exercise("Test1", 1, [10], [1])
-    test2 = Exercise("Test2", 2, [20, 20], [2, 2])
-    test3 = Exercise("Test3", 3, [30, 30, 30], [3, 3, 3])
-    
-    testExercises = [test1, test2, test3]
-
-    testDay = Day("today", "upper push", testExercises)
-
-    print(testDay.date)
-    
     root.mainloop()
-
-    
